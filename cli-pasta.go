@@ -7,19 +7,16 @@ import (
 	"github.com/koki-develop/go-fzf"
 )
 
-func main() {
-
+func initializeDatabase() db.Database{
     // Initialize the Database
-    db := db.Database{}
-    db.BucketName = "data"
-    db.DatabaseName = "pasta.db"
+        db := db.Database{};
+        db.BucketName = "data";
+        db.DatabaseName = "/usr/local/var/pasta.db";
+        return db;
+}
 
-    result := make(chan []string)
-    clip := c.Clipboard{}
-
-    go db.ReadAllValues(db.DatabaseName, db.BucketName, result);
-    
-    items := <-result
+func fuzzySearch(channel chan []string, clip c.Clipboard) {
+    items := <-channel
 
     f, err := fzf.New()
     if err != nil {
@@ -34,5 +31,17 @@ func main() {
     for _, i := range idxs {
         clip.WriteClipboard(items[i])
     }
-    close(result)
+    close(channel)
+}
+
+func main() {
+
+    db := initializeDatabase();
+
+    result := make(chan []string)
+    clip := c.Clipboard{}
+
+    go db.ReadAllValues(db.DatabaseName, db.BucketName, result);
+
+    fuzzySearch(result, clip)
 }

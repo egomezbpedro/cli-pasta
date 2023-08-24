@@ -3,12 +3,13 @@ package main
 import (
 	"github.com/takama/daemon"
 	"github.com/egomezbpedro/cli-pasta/clipboard"
-	"github.com/egomezbpedro/cli-pasta/database"
+    "github.com/egomezbpedro/cli-pasta/database"
 	"log"
 	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
+    "sync"
 )
 
 const (
@@ -16,14 +17,16 @@ const (
     name        = "CliPasta"
     description = "CliPasta is a service to store and retrieve text snippets from the clipboard"
 )
-var stdlog, errlog *log.Logger
-
-var d = database.Database{
-	BucketName: "data",
-	DatabaseName: "pasta.db",
-}
-var clip = clipboard.Clipboard{}
-
+var (
+    stdlog, errlog *log.Logger
+    
+    d = database.Database{
+        BucketName: "data",
+        DatabaseName: "/usr/local/var/pasta.db",
+    }
+    clip = clipboard.Clipboard{}
+    wg = sync.WaitGroup{}
+)
 
 // Service has embedded daemon
 type Service struct {
@@ -54,11 +57,14 @@ func (service *Service) Manage() (string, error) {
         }
     }
 
-	go func() {
+    wg.Add(1)
+    go func() {
 		for {
+            stdlog.Println("Writing to bucket")
 			d.WriteToBucket(d.DatabaseName, d.BucketName, clip.WatchClipboard())
 		}
 	}()
+    wg.Wait()
 	
 	interrupt := make(chan os.Signal, 1)
     signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
@@ -74,7 +80,7 @@ func (service *Service) Manage() (string, error) {
             }
             return "Daemon was killed", nil
 		default:
-			return usage, nil
+			return "usage", nil
         }	
     }
 }
@@ -85,7 +91,9 @@ func init() {
 }
 
 func main() {
-	d.CreateBucket(d.DatabaseName, d.BucketName)
+
+    d.CreateBucket(d.DatabaseName, d.BucketName)
+    
     srv, err := daemon.New(name, description, daemon.UserAgent, nil...)
     if err != nil {
         errlog.Println("Error: ", err)
