@@ -1,1 +1,4 @@
-pasta.db
+cli-pasta
+service/service
+
+find . -name pasta.db
