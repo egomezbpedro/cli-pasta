@@ -1,4 +1,4 @@
-cli-pasta
 service/service
+cli-pasta
 
-find . -name pasta.db
+go.work.*
