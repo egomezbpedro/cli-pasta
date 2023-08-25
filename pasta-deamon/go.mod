@@ -1,4 +1,4 @@
-module service
+module github.com/egomezbpedro/cli-pasta/pasta-deamon
 
 go 1.19
 

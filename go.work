@@ -4,5 +4,5 @@ use (
 	.
 	./clipboard
 	./database
-	./service
+	./cli-pasta-service
 )

@@ -25,6 +25,7 @@ require (
 	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
 	github.com/rivo/uniseg v0.4.2 // indirect
+	github.com/takama/daemon v1.0.0
 	golang.design/x/clipboard v0.7.0 // indirect
 	golang.org/x/exp v0.0.0-20190731235908-ec7cb31e5a56 // indirect
 	golang.org/x/image v0.6.0 // indirect
