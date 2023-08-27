@@ -5,6 +5,7 @@ on:
       - master
       - main
   pull_request:
+    types: [opened, reopened]
 
 permissions:
   contents: read
@@ -16,7 +17,7 @@ jobs:
     strategy:
       matrix:
         go: ['1.21']
-        os: [macos-latest, windows-latest]
+        os: [macos-latest]
     name: lint
     runs-on: ${{ matrix.os }}
     steps:

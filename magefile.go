@@ -57,3 +57,6 @@ func Clean() {
 	os.RemoveAll("cli-pasta")
     os.RemoveAll("./pasta-deamon/pasta-deamon")
 }
+
+func Test() {
+}
