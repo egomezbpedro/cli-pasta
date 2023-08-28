@@ -1,12 +1,13 @@
 package database
 
 import (
-    "os"
+	"encoding/base64"
 	"log"
+	"os"
 	"strconv"
 	"time"
-    "encoding/base64"
-    //"encoding/binary"
+
+	//"encoding/binary"
 	"github.com/boltdb/bolt"
 )
 
@@ -21,7 +22,6 @@ func init() {
     stdlog = log.New(os.Stdout, "", log.Ldate|log.Ltime)
     errlog = log.New(os.Stderr, "", log.Ldate|log.Ltime)
 }
-
 
 /*
 *
@@ -143,9 +143,10 @@ Args:
 
 	bucket name - @type string
 */
-func (d *Database) ReadAllValues(database, bucket string, result chan []string) {
+func (d *Database) ReadAllValues(database, bucket string, result chan map[int]string) {
 
-    items := []string{""}
+    // items := []string{}
+    search := map[int]string{}
 
     db := d.OpenDatabaseRO(database)
     db.View(func(tx *bolt.Tx) error {
@@ -159,14 +160,14 @@ func (d *Database) ReadAllValues(database, bucket string, result chan []string) 
                     errlog.Println("Fail to read/decode values from database", err)
                 }
                 intK, _ := strconv.Atoi(string(k))
-                stdlog.Printf("%d/%s ", intK, string(data))
-                // Insert elements into the items array using intK as the index
-                items = append(items, string(data))
+                search[intK] = string(data)
+                // items = maps.Values(search)
             }
+
             return nil
         })
-        if len(items) > 0 {
-            result <- items
+        if len(search) > 0 {
+            result <- search
         }
         d.CloseDatabase(db)
         return nil
