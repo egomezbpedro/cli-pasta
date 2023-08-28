@@ -22,7 +22,7 @@ var (
     
     d = database.Database{
         BucketName: "data",
-        DatabaseName: "/usr/local/var/pasta.db",
+        DatabaseName: "pasta.db",
     }
     clip = clipboard.Clipboard{}
     wg = sync.WaitGroup{}
@@ -60,7 +60,6 @@ func (service *Service) Manage() (string, error) {
     wg.Add(1)
     go func() {
 		for {
-            stdlog.Println("Writing to bucket")
 			d.WriteToBucket(d.DatabaseName, d.BucketName, clip.WatchClipboard())
 		}
 	}()
