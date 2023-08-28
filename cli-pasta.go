@@ -11,7 +11,7 @@ func initializeDatabase() db.Database{
     // Initialize the Database
         db := db.Database{};
         db.BucketName = "data";
-        db.DatabaseName = "/usr/local/var/pasta.db";
+        db.DatabaseName = "./pasta-deamon/pasta.db";
         return db;
 }
 
