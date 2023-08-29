@@ -2,10 +2,10 @@ package database
 
 import (
 	"fmt"
+	"github.com/boltdb/bolt"
 	"log"
 	"strconv"
 	"time"
-	"github.com/boltdb/bolt"
 )
 
 type Database struct {

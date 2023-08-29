@@ -11,6 +11,9 @@ require (
 require (
 	github.com/magefile/mage v1.15.0 // indirect
 	github.com/stretchr/piglatin v0.0.0-20140311054444-ab61287b9936 // indirect
+	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
+	golang.org/x/mod v0.12.0 // indirect
+	golang.org/x/tools v0.12.0 // indirect
 )
 
 require (
