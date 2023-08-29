@@ -55,5 +55,5 @@ func InstallDeps() error {
 func Clean() {
 	fmt.Println("Cleaning...")
 	os.RemoveAll("cli-pasta")
-    os.RemoveAll("./pasta-deamon/pasta-deamon")
+	os.RemoveAll("./pasta-deamon/pasta-deamon")
 }
