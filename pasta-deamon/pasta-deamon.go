@@ -22,7 +22,7 @@ var (
     
     d = database.Database{
         BucketName: "data",
-        DatabaseName: "pasta.db",
+        DatabaseName: "/usr/local/var/pasta.db",
     }
     clip = clipboard.Clipboard{}
     wg = sync.WaitGroup{}

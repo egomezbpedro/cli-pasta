@@ -9,7 +9,7 @@ Install the background deamon that listen for clipboard updates
 ```sh
     go install github.com/egomezbpedro/cli-pasta/pasta-deamon@latest \
     pasta-deamon install \
-    pasta-deamon satus
+    pasta-deamon status
     
 ```
 

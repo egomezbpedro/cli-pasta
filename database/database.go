@@ -6,8 +6,6 @@ import (
 	"os"
 	"strconv"
 	"time"
-
-	//"encoding/binary"
 	"github.com/boltdb/bolt"
 )
 
